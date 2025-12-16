@@ -41,6 +41,7 @@ public class ProductoWebController {
 		return "productos/lista";
 	}
 
+<<<<<<< HEAD
 	@GetMapping("/restaurant={id}")
 	public String listarProductosPorRestaurante(@PathVariable Integer id, Model model) {
 		model.addAttribute("productos", productoService.buscarPorRestaurant(id));
@@ -48,6 +49,8 @@ public class ProductoWebController {
 		return "productos/productosRestaurant";
 	}
 
+=======
+>>>>>>> b9b7f56ff8941a7108d796c444224cb8e219f05c
 	@GetMapping("/nuevo")
 	public String formularioNuevo(Model model) {
 		model.addAttribute("producto", new Producto());
@@ -69,7 +72,11 @@ public class ProductoWebController {
 	}
 
 	@PostMapping
+<<<<<<< HEAD
 	public String guardarProducto(@ModelAttribute Producto producto, @RequestParam MultipartFile logoFile,
+=======
+	public String guardarProducto(@ModelAttribute Producto producto, @RequestParam("logoFile") MultipartFile logoFile,
+>>>>>>> b9b7f56ff8941a7108d796c444224cb8e219f05c
 			RedirectAttributes redirectAttributes) {
 		if (!logoFile.isEmpty()) {
 			try {

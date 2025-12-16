@@ -30,6 +30,10 @@ public class RestaurantWebController {
 	@Autowired
 	private RestaurantService restaurantService;
 
+<<<<<<< HEAD
+=======
+	// 1. LISTAR TODOS (GET /web/restaurants)
+>>>>>>> b9b7f56ff8941a7108d796c444224cb8e219f05c
 	@GetMapping
 	public String obtenerTodos(@RequestParam(required = false) String nombre, Model model) {
 		List<Restaurant> restaurantes;
@@ -39,8 +43,13 @@ public class RestaurantWebController {
 			restaurantes = restaurantService.obtenerTodos();
 		}
 		model.addAttribute("restaurants", restaurantes);
+<<<<<<< HEAD
 		// model.addAttribute("pedidos", );
 		return "restaurants/listaRestaurant";
+=======
+		// ⭐ MODIFICADO: Devolver la plantilla 'restaurants/lista.html'
+		return "restaurants/lista";
+>>>>>>> b9b7f56ff8941a7108d796c444224cb8e219f05c
 	}
 
 	// 2. FORMULARIO NUEVO (GET /web/restaurants/nuevo)
@@ -65,7 +74,12 @@ public class RestaurantWebController {
 
 	// 4. GUARDAR / ACTUALIZAR (POST /web/restaurants)
 	@PostMapping("/guardar")
+<<<<<<< HEAD
 	public String guardar(@ModelAttribute Restaurant restaurant, @RequestParam(required = false) MultipartFile logoFile,
+=======
+	public String guardar(@ModelAttribute Restaurant restaurant,
+			@RequestParam(value = "logoFile", required = false) MultipartFile logoFile,
+>>>>>>> b9b7f56ff8941a7108d796c444224cb8e219f05c
 			RedirectAttributes redirectAttributes) {
 
 		// Si está editando

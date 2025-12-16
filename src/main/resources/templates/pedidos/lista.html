@@ -103,7 +103,16 @@ body {
 							<td th:text="${pedido.id}"></td>
 							<td th:text="${pedido.fecha}"></td>
 							<td th:text="${pedido.total}"></td>
+<<<<<<< HEAD
 							<td th:text="${pedido.usuario.rol.descripcion}"></td>
+=======
+							<td
+								th:text="${
+       pedido.usuario.tipoUsuario == 'N' ? 
+       pedido.usuario.natural.nombre : 
+       pedido.usuario.juridica.rso
+}"></td>
+>>>>>>> b9b7f56ff8941a7108d796c444224cb8e219f05c
 
 							<td><a
 								th:href="@{/web/pedidos/{id}/editar(id=${pedido.id})}"

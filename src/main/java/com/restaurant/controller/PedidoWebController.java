@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.restaurant.model.DetallePedidos;
@@ -20,12 +21,19 @@ import com.restaurant.service.PedidoService;
 import com.restaurant.service.ProductoService;
 
 import jakarta.servlet.http.HttpSession;
+=======
+
+import com.restaurant.model.Pedidos;
+import com.restaurant.service.PedidoService;
+import com.restaurant.service.UsuarioService;
+>>>>>>> b9b7f56ff8941a7108d796c444224cb8e219f05c
 
 @Controller
 @RequestMapping("/web/pedidos")
 public class PedidoWebController {
 
 	@Autowired
+<<<<<<< HEAD
 	private DetallePedidoService detallePedidoService;
 
 	@Autowired
@@ -36,17 +44,26 @@ public class PedidoWebController {
 	PedidoWebController(DetallePedidoService detallePedidoService) {
 		this.detallePedidoService = detallePedidoService;
 	}
+=======
+	private PedidoService pedidoService;
+	@Autowired
+	private UsuarioService usuarioService;
+>>>>>>> b9b7f56ff8941a7108d796c444224cb8e219f05c
 
 	@GetMapping
 	public String listarPedidos(Model model) {
 		model.addAttribute("pedidos", pedidoService.obtenerTodo());
+<<<<<<< HEAD
 		// model.addAttribute("pedidos",pedidoService)
+=======
+>>>>>>> b9b7f56ff8941a7108d796c444224cb8e219f05c
 		return "pedidos/lista";
 	}
 
 	@GetMapping("/nuevo")
 	public String formularioNuevo(Model model) {
 		model.addAttribute("pedido", new Pedidos());
+<<<<<<< HEAD
 		// model.addAttribute("usuarios", usuarioService.obtenerTodos());
 		return "pedidos/formulario";
 	}
@@ -87,15 +104,33 @@ public class PedidoWebController {
 		pedidoService.guardar(pedido);
 
 		return "redirect:/web/productos";
+=======
+		model.addAttribute("usuarios", usuarioService.obtenerTodos());
+		return "pedidos/formulario";
+	}
+
+	@PostMapping
+	public String guardarPedido(Pedidos pedido) {
+
+		pedidoService.guardar(pedido);
+
+		return "redirect:/web/pedidos";
+>>>>>>> b9b7f56ff8941a7108d796c444224cb8e219f05c
 	}
 
 	@GetMapping("/{id}/editar")
 	public String editar(@PathVariable Integer id, Model model) {
 		Optional<Pedidos> pedido = pedidoService.buscarPorId(id);
 
+<<<<<<< HEAD
 		if (pedido != null && pedido.isPresent()) {
 			model.addAttribute("pedido", pedido.get());
 			// model.addAttribute("usuarios", usuarioService.obtenerTodos());
+=======
+		if (pedido != null && !pedido.isEmpty()) {
+			model.addAttribute("pedido", pedido.get());
+			model.addAttribute("usuarios", usuarioService.obtenerTodos());
+>>>>>>> b9b7f56ff8941a7108d796c444224cb8e219f05c
 			return "pedidos/formulario";
 		}
 		return "redirect:/web/pedidos";
