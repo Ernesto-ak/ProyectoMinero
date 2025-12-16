@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario Rol</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; }
+        .navbar { background-color: #1f4e78 !important; }
+        .card-header { background-color: #1f4e78; color: white; }
+        .btn-primary { background-color: #1f4e78; border-color: #1f4e78; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark mb-4">
+        <div class="container-fluid"><a class="navbar-brand" href="/">📚 Sistema</a></div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h4 class="mb-0">
+                            <i class="fas fa-shield-alt"></i> 
+                            <span th:text="${rol.id != null ? 'Editar Rol' : 'Nuevo Rol'}"></span>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/web/roles}" th:object="${rol}" method="post">
+                            <input type="hidden" th:field="*{id}" />
+                            
+                            <div class="mb-3">
+								    <label class="form-label fw-bold">Nombre del Rol</label>
+								    <div class="input-group">
+								        <span class="input-group-text"><i class="fas fa-tag"></i></span>
+								        <input type="text" class="form-control" th:field="*{nombre}" 
+								               placeholder="Ej: Administrador, Vendedor, Editor..." required>
+								    </div>
+								    <small class="text-muted">El nombre se guardará exactamente como lo escribas.</small>
+								</div>
+
+                            <div class="d-flex gap-2 mt-4">
+                                <button type="submit" class="btn btn-primary w-100"><i class="fas fa-save"></i> Guardar</button>
+                                <a href="/api/web/roles" class="btn btn-secondary w-100"><i class="fas fa-times"></i> Cancelar</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

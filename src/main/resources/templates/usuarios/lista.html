@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Usuarios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; }
+        .navbar { background-color: #1f4e78 !important; }
+        .btn-primary { background-color: #1f4e78; border-color: #1f4e78; }
+        
+         /* Estilo para la info del usuario en navbar */
+        .user-info {
+            font-size: 0.9rem;
+            line-height: 1.2;
+            text-align: right;
+            color: rgba(255,255,255,0.9);
+        }
+        .user-role {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.7);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}">
+                <i class="fas fa-book-open"></i> Biblioteca
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link " th:href="@{/web/autores}">Autores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " th:href="@{/web/libros}">Libros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " th:href="@{/web/categorias}">Categorías</a>
+                    </li>
+                    
+                    <li class="nav-item dropdown" sec:authorize="hasAuthority('Administrador')">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Administración
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item active" th:href="@{/web/usuarios}">Gestión Usuarios</a></li>
+                            <li><a class="dropdown-item " th:href="@{/web/roles}">Gestión Roles</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ms-auto align-items-center">
+                    
+                    <li class="nav-item d-flex align-items-center border-end pe-3 me-3" sec:authorize="isAuthenticated()">
+                        <div class="user-info me-2">
+                            <div class="fw-bold">
+                                <span sec:authentication="name">Usuario</span>
+                            </div>
+                            <div class="user-role">
+                                <span sec:authentication="principal.authorities">ROLES</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-user-circle fa-2x text-white-50"></i>
+                    </li>
+
+                    <li class="nav-item">
+                        <form th:action="@{/logout}" method="post" class="m-0">
+                            <button class="btn btn-outline-light btn-sm" type="submit" title="Cerrar Sesión">
+                                Salir <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <h2><i class="fas fa-users-cog"></i> Gestión de Usuarios</h2>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="/api/web/usuarios/nuevo" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i> Nuevo Usuario
+                </a>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Usuario</th>
+                                <th>Roles</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="usuario : ${usuarios}">
+                                <td th:text="${usuario.id}"></td>
+                                <td th:text="${usuario.username}" class="fw-bold"></td>
+                                <td>
+                                    <span th:each="rol : ${usuario.roles}" class="badge bg-secondary me-1" th:text="${rol.nombre}">ROLE</span>
+                                </td>
+                                <td>
+                                    <a th:href="@{/web/usuarios/{id}/editar(id=${usuario.id})}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+                                    <a th:href="@{/web/usuarios/{id}/eliminar(id=${usuario.id})}" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar usuario?')"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
